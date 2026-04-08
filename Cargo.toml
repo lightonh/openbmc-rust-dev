@@ -1,0 +1,7 @@
+[workspace]
+members = [
+	"services/common-ipc",
+	"services/proxy-service",
+	"services/logic-engine",
+]
+resolver = "2"
