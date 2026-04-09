@@ -98,6 +98,21 @@ async fn handle_ipc(
                                 .clone()
                         };
 
+                        // if the object is not D-Bus, do dynamically register it
+                        if conn.object_server()
+                            .interface::<_, NetworkProxy>(path.as_str())
+                            .await
+                            .is_err()
+                        {
+                            let new_proxy = NetworkProxy { store: store.clone() };
+                            conn.object_server()
+                                .at(path.as_str(), new_proxy)
+                                .await
+                                .unwrap();
+                            println!("Proxy: New object registered: {}", path);
+                        }
+                        
+
                         let changed = store.set(property.clone(), value.clone()).await;
 
                         if changed {
