@@ -11,4 +11,3 @@ pub enum LogicResponse {
     PropertyValue { value: String },
     Error { message: String },
 }
-
